@@ -8,6 +8,8 @@ public class Activity {
 	private String associations;
 	// 活动时间
 	private String time;
+	// 参与者
+	private String participant;
 	// 活动地点
 	private String place;
 	// 活动简介
@@ -25,6 +27,10 @@ public class Activity {
 		return time;
 	}
 
+	public String getOarticipant() {
+		return participant;
+	}
+
 	public String getPlace() {
 		return place;
 	}
@@ -33,10 +39,12 @@ public class Activity {
 		return synopsis;
 	}
 
-	public Activity(String _name, String _associations, String _time, String _place, String _synopsis) {
+	public Activity(String _name, String _associations, String _time, String _participant, String _place,
+			String _synopsis) {
 		this.name = _name;
 		this.associations = _associations;
 		this.time = _time;
+		this.participant = _participant;
 		this.place = _place;
 		this.synopsis = _synopsis;
 	}
