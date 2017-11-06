@@ -10,9 +10,13 @@ public class People {
 	private String classes;
 	// 电话号码
 	private String phoneNumber;
-	// 电子邮箱Ï
+	// QQ
+	private String qq;
+	// 微信
+	private String wechat;
+	// 电子邮箱
 	private String email;
-	
+
 	public String getName() {
 		return name;
 	}
@@ -40,11 +44,6 @@ public class People {
 	public String getWechat() {
 		return wechat;
 	}
-
-	// QQ
-	private String qq;
-	// 微信
-	private String wechat;
 
 	public People(String _name, String _institute, String _classes, String _phoneNumber, String _email, String _qq,
 			String _wechat) {
