@@ -60,6 +60,10 @@ public class Association {
 	public String getEmail() {
 		return email;
 	}
+	
+	public String getMenbers() {
+		return members;
+	}
 
 	public String getFoundingTime() {
 		return foundingTime;
