@@ -1,6 +1,5 @@
 package com.cyice.ams.model;
 
-
 public class Association {
 
 	// 社团名称
@@ -15,6 +14,8 @@ public class Association {
 	private String wechat;
 	// 电子邮箱
 	private String email;
+	// 社团成员
+	private String members;
 	// 成立时间
 	private String foundingTime;
 	// 社团网址
@@ -23,13 +24,14 @@ public class Association {
 	private String synopsis;
 
 	public Association(String _name, People _charge, String _phoneNumber, String _qq, String _wechat, String _email,
-			String _foundingTime, String _websize, String _synopsis) {
+			String _member, String _foundingTime, String _websize, String _synopsis) {
 		this.name = _name;
 		this.charge = _charge;
 		this.phoneNumber = _phoneNumber;
 		this.qq = _qq;
 		this.wechat = _wechat;
 		this.email = _email;
+		this.members = _member;
 		this.foundingTime = _foundingTime;
 		this.websize = _websize;
 		this.synopsis = _synopsis;
