@@ -5,7 +5,7 @@ public class Association {
 	// 社团名称
 	private String name;
 	// 负责人
-	private People charge;
+	private String chargeName;
 	// 电话号码
 	private String phoneNumber;
 	// QQ
@@ -20,20 +20,20 @@ public class Association {
 	private String foundingTime;
 	// 社团网址
 	private String websize;
+	// 社团所有活动名称
+	private String activities;
 	// 简介
 	private String synopsis;
 
-	public Association(String _name, People _charge, String _phoneNumber, String _qq, String _wechat, String _email,
-			String _member, String _foundingTime, String _websize, String _synopsis) {
+	public Association(String _name, String _foundingTime, String _chargeName, String _phoneNumber, String _email,
+			String _members, String _activities, String _synopsis) {
 		this.name = _name;
-		this.charge = _charge;
+		this.chargeName = _chargeName;
 		this.phoneNumber = _phoneNumber;
-		this.qq = _qq;
-		this.wechat = _wechat;
 		this.email = _email;
-		this.members = _member;
+		this.members = _members;
 		this.foundingTime = _foundingTime;
-		this.websize = _websize;
+		this.activities = _activities;
 		this.synopsis = _synopsis;
 	}
 
@@ -41,8 +41,12 @@ public class Association {
 		return name;
 	}
 
-	public People getCharge() {
-		return charge;
+	public String getChargeName() {
+		return chargeName;
+	}
+
+	public String getActivities() {
+		return activities;
 	}
 
 	public String getPhoneNumber() {
@@ -60,7 +64,7 @@ public class Association {
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public String getMenbers() {
 		return members;
 	}
