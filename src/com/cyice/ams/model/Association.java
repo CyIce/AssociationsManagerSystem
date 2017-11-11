@@ -81,4 +81,20 @@ public class Association {
 		return synopsis;
 	}
 
+	public String getFormatInfo(int _level) {
+		StringBuilder formatInfo = new StringBuilder();
+		String separator = System.getProperty("line.separator");
+		formatInfo.append("    社团名称 ： " + this.name + separator);
+		formatInfo.append("社团负责人 ： " + this.chargeName + separator);
+		formatInfo.append("    电话号码 ： " + this.phoneNumber + separator);
+		formatInfo.append("    电子邮箱 ： " + this.email + separator);
+		formatInfo.append("    成立时间 ： " + this.foundingTime + separator);
+		formatInfo.append("    社团活动 ： " + this.activities + separator);
+		// 表示管理员进行操作
+		if (-1 == _level) {
+			formatInfo.append("社团成员");
+		}
+		return formatInfo.toString();
+	}
+
 }

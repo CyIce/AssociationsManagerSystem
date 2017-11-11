@@ -1,32 +1,17 @@
 package com.cyice.ams.view;
 
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.ListModel;
-import javax.swing.SortingFocusTraversalPolicy;
-import javax.swing.event.ListDataListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.text.StyledEditorKit.ForegroundAction;
-
-import com.cyice.ams.model.Association;
-
-import java.util.List;
-import javax.print.attribute.standard.MediaSize.Engineering;
-import javax.swing.AbstractListModel;
-import javax.swing.DefaultListModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.Font;
-import java.awt.Color;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class AssociationsView extends JFrame{
 	private JList<String> associations;
@@ -47,7 +32,7 @@ public class AssociationsView extends JFrame{
 		
 		JScrollPane associationSP = new JScrollPane();
 		
-		JLabel activitySearchLabel = new JLabel("  搜索。");
+		JLabel activitySearchLabel = new JLabel("  搜索  ");
 		
 		activitySearch = new JTextField();
 		activitySearch.setColumns(10);
@@ -95,16 +80,17 @@ public class AssociationsView extends JFrame{
 		);
 		
 		infoArea = new JTextArea();
+		infoArea.setFont(new Font("Kefa", Font.PLAIN, 22));
 		infoArea.setEditable(false);
 		infoAreaSP.setViewportView(infoArea);
 		
-		activities = new JList();
+		activities = new JList<String>();
 		activities.setBackground(new Color(0, 255, 255));
 		activities.setForeground(new Color(0, 0, 51));
 		activities.setFont(new Font("Kokonor", Font.BOLD, 18));
 		activitySP.setViewportView(activities);
 		
-		associations = new JList();
+		associations = new JList<String>();
 		associations.setBackground(new Color(0, 255, 255));
 		associations.setForeground(new Color(0, 0, 51));
 		associations.setFont(new Font("Kokonor", Font.BOLD, 18));
