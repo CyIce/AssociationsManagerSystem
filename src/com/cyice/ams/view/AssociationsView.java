@@ -1,9 +1,13 @@
 package com.cyice.ams.view;
 
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -14,11 +18,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JRadioButton;
-import javax.swing.JTable;
 
 public class AssociationsView extends JFrame {
 	private JTextField associationSearch;
@@ -32,20 +31,21 @@ public class AssociationsView extends JFrame {
 	private JCheckBox activitiesSort;
 	private JPanel identityPanel;
 	private JButton identity;
-
+	private MyJPanel backgroundPanel;
 
 	public AssociationsView() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
 
-		JPanel background = new JPanel();
-		background.setOpaque(false);
-		
+		backgroundPanel = new MyJPanel(null,true);
+		backgroundPanel.setOpaque(false);
+
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addComponent(background,
+
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addComponent(backgroundPanel,
 				GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addComponent(background,
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addComponent(backgroundPanel,
 				GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE));
 
 		JLabel associationSearchLabel = new JLabel("搜索");
@@ -63,18 +63,18 @@ public class AssociationsView extends JFrame {
 		JScrollPane activitiesListSP = new JScrollPane();
 
 		infoAreaSP = new JScrollPane();
-		
+
 		associationsSort = new JCheckBox("S");
 		associationsSort.setVisible(false);
-		
+
 		activitiesSort = new JCheckBox("S");
 		activitiesSort.setVisible(false);
-		
+
 		infoArea = new JTextArea();
 		infoArea.setForeground(Color.CYAN);
 		infoArea.setFont(new Font("Mshtakan", Font.PLAIN, 20));
 		infoArea.setEditable(false);
-		infoAreaSP.setRowHeaderView(infoArea);
+		infoAreaSP.setViewportView(infoArea);
 
 		activities = new JList<String>();
 		activities.setFont(new Font("Kokonor", Font.PLAIN, 16));
@@ -83,89 +83,85 @@ public class AssociationsView extends JFrame {
 		associations = new JList<String>();
 		associations.setFont(new Font("Kokonor", Font.PLAIN, 16));
 		associationsListSP.setViewportView(associations);
-		
+
 		identityPanel = new JPanel();
-	
-		GroupLayout gl_background = new GroupLayout(background);
-		gl_background.setHorizontalGroup(
-			gl_background.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_background.createSequentialGroup()
-					.addGroup(gl_background.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_background.createSequentialGroup()
-							.addGroup(gl_background.createParallelGroup(Alignment.LEADING)
+		identityPanel.setOpaque(false);
+
+		GroupLayout gl_background = new GroupLayout(backgroundPanel);
+		gl_background.setHorizontalGroup(gl_background.createParallelGroup(Alignment.LEADING).addGroup(gl_background
+				.createSequentialGroup()
+				.addGroup(gl_background.createParallelGroup(Alignment.LEADING).addGroup(gl_background
+						.createSequentialGroup()
+						.addGroup(gl_background.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_background.createSequentialGroup().addGap(6).addComponent(
+										associationsListSP, GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE))
+								.addGroup(gl_background.createSequentialGroup().addGap(18)
+										.addComponent(associationSearchLabel, GroupLayout.PREFERRED_SIZE, 42,
+												GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.RELATED).addComponent(associationSearch,
+												GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)))
+						.addGap(6)
+						.addGroup(gl_background.createParallelGroup(Alignment.TRAILING)
 								.addGroup(gl_background.createSequentialGroup()
-									.addGap(6)
-									.addComponent(associationsListSP, GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE))
-								.addGroup(gl_background.createSequentialGroup()
-									.addGap(18)
-									.addComponent(associationSearchLabel, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(associationSearch, GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)))
-							.addGap(6)
-							.addGroup(gl_background.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_background.createSequentialGroup()
-									.addComponent(associationsSort, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED, 364, Short.MAX_VALUE)
-									.addComponent(activitiesSort, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
+										.addComponent(associationsSort, GroupLayout.PREFERRED_SIZE, 39,
+												GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(ComponentPlacement.RELATED, 364, Short.MAX_VALUE)
+										.addComponent(activitiesSort, GroupLayout.PREFERRED_SIZE, 39,
+												GroupLayout.PREFERRED_SIZE))
 								.addComponent(infoAreaSP, GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE))
-							.addGap(6)
-							.addGroup(gl_background.createParallelGroup(Alignment.LEADING)
+						.addGap(6)
+						.addGroup(gl_background.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_background.createSequentialGroup()
-									.addComponent(activitySearch, GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(activitySearchLabel, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE))
-								.addComponent(activitiesListSP, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)))
-						.addGroup(gl_background.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(identityPanel, GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE)))
-					.addContainerGap())
-		);
-		gl_background.setVerticalGroup(
-			gl_background.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_background.createSequentialGroup()
-					.addComponent(identityPanel, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-					.addGap(4)
-					.addGroup(gl_background.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_background.createSequentialGroup()
-							.addGap(2)
-							.addComponent(associationSearchLabel, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+										.addComponent(activitySearch, GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+										.addPreferredGap(ComponentPlacement.RELATED).addComponent(activitySearchLabel,
+												GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE))
+								.addComponent(activitiesListSP, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 220,
+										Short.MAX_VALUE)))
+						.addGroup(gl_background.createSequentialGroup().addContainerGap().addComponent(identityPanel,
+								GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE)))
+				.addContainerGap()));
+		gl_background.setVerticalGroup(gl_background.createParallelGroup(Alignment.TRAILING).addGroup(gl_background
+				.createSequentialGroup()
+				.addComponent(identityPanel, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE).addGap(4)
+				.addGroup(gl_background.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_background.createSequentialGroup().addGap(2).addComponent(associationSearchLabel,
+								GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_background.createParallelGroup(Alignment.BASELINE)
-							.addComponent(associationSearch, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-							.addComponent(associationsSort))
+								.addComponent(associationSearch, GroupLayout.PREFERRED_SIZE, 39,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(associationsSort))
 						.addGroup(gl_background.createParallelGroup(Alignment.BASELINE)
-							.addComponent(activitySearchLabel, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-							.addComponent(activitySearch, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-							.addComponent(activitiesSort)))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_background.createParallelGroup(Alignment.LEADING)
+								.addComponent(activitySearchLabel, GroupLayout.PREFERRED_SIZE, 34,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(activitySearch, GroupLayout.PREFERRED_SIZE, 38,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(activitiesSort)))
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addGroup(gl_background.createParallelGroup(Alignment.LEADING)
 						.addComponent(associationsListSP, GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
 						.addComponent(infoAreaSP, GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
 						.addComponent(activitiesListSP, GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE))
-					.addGap(174))
-		);
-		
+				.addGap(174)));
+
 		identity = new JButton("学生");
 
 		identityPanel.add(identity);
-		background.setLayout(gl_background);
+		backgroundPanel.setLayout(gl_background);
 		getContentPane().setLayout(groupLayout);
+
 	}
-	
 
 	public JButton getIdentity() {
 		return identity;
 	}
 
-
 	public JCheckBox getAssociationsSort() {
 		return associationsSort;
 	}
 
-
 	public JCheckBox getActivitiesSort() {
 		return activitiesSort;
 	}
-
 
 	public JList<String> getAssociations() {
 		return associations;
@@ -186,4 +182,9 @@ public class AssociationsView extends JFrame {
 	public JTextField getActivitySearch() {
 		return activitySearch;
 	}
+
+	public MyJPanel getBackgroundPanel() {
+		return backgroundPanel;
+	}
+
 }

@@ -1,15 +1,21 @@
 package com.cyice.ams.control;
 
 import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
@@ -173,19 +179,23 @@ public class Control implements ListSelectionListener, MouseListener, ActionList
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 
-		if (e.getSource().equals(associationsView.getAssociations())) {
-			String associationName = (String) ((JList<?>) e.getSource()).getSelectedValue();
-			Association association = this.findAAssociationByName(associationName);
-			if (association != null) {
-				associationsView.getInfoArea().setText(association.getFormatInfo(this.isController));
-			}
-		} else if (e.getSource().equals(associationsView.getActivities())) {
-			String activityName = (String) ((JList<?>) e.getSource()).getSelectedValue();
-			Activity activity = this.findActivityByName(activityName);
-			if (activity != null) {
-				associationsView.getInfoArea().setText(activity.getFormatInfo(this.isController));
+		if (!e.getValueIsAdjusting()) {
+			if (e.getSource().equals(associationsView.getAssociations())) {
+				String associationName = (String) ((JList<?>) e.getSource()).getSelectedValue();
+				Association association = this.findAAssociationByName(associationName);
+				if (association != null) {
+					changeBackGroundImage(associationName);
+					associationsView.getInfoArea().setText(association.getFormatInfo(this.isController));
+				}
+			} else if (e.getSource().equals(associationsView.getActivities())) {
+				String activityName = (String) ((JList<?>) e.getSource()).getSelectedValue();
+				Activity activity = this.findActivityByName(activityName);
+				if (activity != null) {
+					associationsView.getInfoArea().setText(activity.getFormatInfo(this.isController));
+				}
 			}
 		}
+
 	}
 
 	// 通过社团名称获取社团实例
@@ -196,6 +206,16 @@ public class Control implements ListSelectionListener, MouseListener, ActionList
 			}
 		}
 		return null;
+	}
+
+	// 切换界面背景图片
+	private void changeBackGroundImage(String imageName) {
+		Random random = new Random();
+		int tag = random.nextInt(2) + 1;
+		String url = "file/images/" + imageName + tag + ".jpg";
+		associationsView.getBackgroundPanel().setIBackgroundImage(new ImageIcon(url).getImage());
+		associationsView.repaint();
+
 	}
 
 	// 修改排序按钮的可见性
