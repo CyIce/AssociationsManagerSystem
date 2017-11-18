@@ -13,14 +13,14 @@ public class FileInput {
 	public static List<String> readFile(String fileName) {
 
 		List<String> allString = new ArrayList<>();
-		String fileUrl = System.getProperty("user.dir") + "/file/documents/" + fileName + ".csv";
+		String fileUrl = "file/documents/" + fileName + ".csv";
 		BufferedReader bufferedReader = null;
 		InputStreamReader inputStreamReader;
 		FileInputStream fileInputStream;
 
 		try {
 			fileInputStream = new FileInputStream(fileUrl);
-			inputStreamReader = new InputStreamReader(fileInputStream,"GBK");
+			inputStreamReader = new InputStreamReader(fileInputStream, "GBK");
 			bufferedReader = new BufferedReader(inputStreamReader);
 
 			String line;

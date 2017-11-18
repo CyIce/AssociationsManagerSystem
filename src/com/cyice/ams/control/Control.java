@@ -1,11 +1,17 @@
 package com.cyice.ams.control;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -16,7 +22,7 @@ import com.cyice.ams.model.Association;
 import com.cyice.ams.model.FileInput;
 import com.cyice.ams.view.AssociationsView;
 
-public class Control implements ListSelectionListener {
+public class Control implements ListSelectionListener, MouseListener, ActionListener {
 
 	// 社团介绍实图实例
 	private AssociationsView associationsView;
@@ -24,6 +30,10 @@ public class Control implements ListSelectionListener {
 	private List<Association> associations = new ArrayList<>();
 	// 活动实例
 	private List<Activity> activities = new ArrayList<>();
+	//
+	private boolean isController = false;
+	//
+	private String passwords = "123456";
 
 	public void initView() {
 
@@ -37,6 +47,8 @@ public class Control implements ListSelectionListener {
 					associationsView.setVisible(true);
 					initSelectetionListener();
 					initTextFieldListener();
+					initSortListener();
+					initButtonListener();
 					updateAssociationsList(null);
 					updateActivitiesList(null);
 
@@ -48,10 +60,21 @@ public class Control implements ListSelectionListener {
 
 	}
 
-	// 绑定事件监听函数
+	// 绑定列表事件监听函数
 	private void initSelectetionListener() {
 		associationsView.getAssociations().addListSelectionListener(this);
 		associationsView.getActivities().addListSelectionListener(this);
+	}
+
+	// 绑定按键事件监听函数
+	private void initButtonListener() {
+		associationsView.getIdentity().addActionListener(this);
+	}
+
+	// 绑定排序按钮的事件监听函数
+	private void initSortListener() {
+		associationsView.getAssociationsSort().addMouseListener(this);
+		associationsView.getActivitiesSort().addMouseListener(this);
 	}
 
 	// 社团列表和活动列表搜索事件监听和响应
@@ -90,7 +113,6 @@ public class Control implements ListSelectionListener {
 	}
 
 	// 初始化社团实例
-	// 初始化社团实例
 	private void initAssociations() {
 		List<String> strings = FileInput.readFile("社团表");
 		for (String s : strings) {
@@ -102,7 +124,7 @@ public class Control implements ListSelectionListener {
 		}
 	}
 
-	// 初始化活动实例 // 初始化活动实例
+	// 初始化活动实例
 	private void initActivities() {
 		List<String> strings = FileInput.readFile("活动表");
 		for (String s : strings) {
@@ -116,7 +138,6 @@ public class Control implements ListSelectionListener {
 	}
 
 	// 更新社团列表内容
-	// 更新社团列表
 	private void updateAssociationsList(String _words) {
 		DefaultListModel<String> associationsValue = new DefaultListModel<>();
 		Boolean isBlank = true;
@@ -132,7 +153,6 @@ public class Control implements ListSelectionListener {
 	}
 
 	// 更新活动列表内容
-	// 更新活动列表
 	private void updateActivitiesList(String _words) {
 		DefaultListModel<String> activitiesValue = new DefaultListModel<>();
 		Boolean isBlank = true;
@@ -147,7 +167,6 @@ public class Control implements ListSelectionListener {
 		}
 
 	}
-	// 社团列表和活动列表事件响应
 
 	// 事件监听函数
 	@Override
@@ -157,13 +176,13 @@ public class Control implements ListSelectionListener {
 			String associationName = (String) ((JList<?>) e.getSource()).getSelectedValue();
 			Association association = this.findAAssociationByName(associationName);
 			if (association != null) {
-				associationsView.getInfoArea().setText(association.getFormatInfo(0));
+				associationsView.getInfoArea().setText(association.getFormatInfo(this.isController));
 			}
 		} else if (e.getSource().equals(associationsView.getActivities())) {
 			String activityName = (String) ((JList<?>) e.getSource()).getSelectedValue();
 			Activity activity = this.findActivityByName(activityName);
 			if (activity != null) {
-				associationsView.getInfoArea().setText(activity.getFormatInfo());
+				associationsView.getInfoArea().setText(activity.getFormatInfo(this.isController));
 			}
 		}
 	}
@@ -178,6 +197,12 @@ public class Control implements ListSelectionListener {
 		return null;
 	}
 
+	// 修改排序按钮的可见性
+	private void changeVisibleOfSort(boolean visible) {
+		associationsView.getAssociationsSort().setVisible(visible);
+		associationsView.getActivitiesSort().setVisible(visible);
+	}
+
 	// 通过活动名称获取活动实例
 	private Activity findActivityByName(String _name) {
 		for (Activity activity : activities) {
@@ -186,6 +211,58 @@ public class Control implements ListSelectionListener {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+
+		if (e.getSource().equals(associationsView.getAssociationsSort())) {
+			Collections.sort(associations);
+			Collections.shuffle(associations);
+			updateAssociationsList(null);
+		} else if (e.getSource().equals(associationsView.getActivitiesSort())) {
+			Collections.sort(activities);
+			Collections.shuffle(activities);
+			updateActivitiesList(null);
+		}
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource().equals(associationsView.getIdentity())) {
+			String words;
+			do {
+				words = JOptionPane.showInputDialog(null, "请输入管理员密码 ！", "输入密码");
+			} while (!passwords.equals(words) && words != null);
+			if (passwords.equals(words)) {
+				isController = isController == false ? true : false;
+				String identity = isController == false ? "学生" : "管理员";
+				associationsView.getIdentity().setText(identity);
+				this.changeVisibleOfSort(isController);
+			}
+		}
+
 	}
 
 }

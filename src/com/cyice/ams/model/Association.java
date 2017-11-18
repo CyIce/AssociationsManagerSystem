@@ -1,6 +1,6 @@
 package com.cyice.ams.model;
 
-public class Association {
+public class Association implements Comparable<Association> {
 
 	// 社团名称
 	private String name;
@@ -81,20 +81,38 @@ public class Association {
 		return synopsis;
 	}
 
-	public String getFormatInfo(int _level) {
+	public String getFormatInfo(boolean isController) {
 		StringBuilder formatInfo = new StringBuilder();
 		String separator = System.getProperty("line.separator");
-		formatInfo.append("    社团名称 ： " + this.name + separator);
+		formatInfo.append("社团名称 ： " + this.name + separator);
 		formatInfo.append("社团负责人 ： " + this.chargeName + separator);
-		formatInfo.append("    电话号码 ： " + this.phoneNumber + separator);
-		formatInfo.append("    电子邮箱 ： " + this.email + separator);
-		formatInfo.append("    成立时间 ： " + this.foundingTime + separator);
-		formatInfo.append("    社团活动 ： " + this.activities + separator);
+		formatInfo.append("电话号码 ： " + this.phoneNumber + separator);
+		formatInfo.append("电子邮箱 ： " + this.email + separator);
+		formatInfo.append("成立时间 ： " + this.foundingTime + separator);
+		formatInfo.append("社团活动 ： " + this.activities + separator);
 		// 表示管理员进行操作
-		if (-1 == _level) {
-			formatInfo.append("社团成员");
+		if (isController == true) {
+			formatInfo.append("社团成员 : " + this.members + separator);
 		}
 		return formatInfo.toString();
+	}
+
+	// 将时间转化为int类型返回
+	private int timeToIntege() {
+		String[] times = foundingTime.split("\\.");
+		int t = Integer.parseInt(times[0]) * 10000 + Integer.parseInt(times[1]) * 100 + Integer.parseInt(times[2]);
+		return t;
+	}
+
+	@Override
+	public int compareTo(Association o) {
+		if (this.timeToIntege() > o.timeToIntege()) {
+			return 1;
+		} else if (this.timeToIntege() < o.timeToIntege()) {
+			return -1;
+		} else {
+			return 0;
+		}
 	}
 
 }
