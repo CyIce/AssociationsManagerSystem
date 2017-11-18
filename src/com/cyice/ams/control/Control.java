@@ -217,13 +217,19 @@ public class Control implements ListSelectionListener, MouseListener, ActionList
 	public void mouseClicked(MouseEvent e) {
 
 		if (e.getSource().equals(associationsView.getAssociationsSort())) {
-			Collections.sort(associations);
-			Collections.shuffle(associations);
-			updateAssociationsList(null);
+			if (associationsView.getAssociationsSort().isSelected()) {
+				Collections.sort(associations);
+			} else {
+				Collections.shuffle(associations);
+			}
+			updateAssociationsList(associationsView.getAssociationSearch().getText());
 		} else if (e.getSource().equals(associationsView.getActivitiesSort())) {
-			Collections.sort(activities);
-			Collections.shuffle(activities);
-			updateActivitiesList(null);
+			if (associationsView.getActivitiesSort().isSelected()) {
+				Collections.sort(activities);
+			} else {
+				Collections.shuffle(activities);
+			}
+			updateActivitiesList(associationsView.getActivitySearch().getText());
 		}
 
 	}
