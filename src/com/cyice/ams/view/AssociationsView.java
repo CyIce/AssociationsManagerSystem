@@ -2,12 +2,9 @@ package com.cyice.ams.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -32,13 +29,16 @@ public class AssociationsView extends JFrame {
 	private JPanel identityPanel;
 	private JButton identity;
 	private MyJPanel backgroundPanel;
+	private JLabel associationSearchLabel;
+	private JLabel activitySearchLabel;
+	private JScrollPane activitiesListSP;
 
 	public AssociationsView() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
 
-		backgroundPanel = new MyJPanel(null,true);
+		backgroundPanel = new MyJPanel(null, true);
 		backgroundPanel.setOpaque(false);
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
@@ -48,19 +48,19 @@ public class AssociationsView extends JFrame {
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addComponent(backgroundPanel,
 				GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE));
 
-		JLabel associationSearchLabel = new JLabel("搜索");
+		associationSearchLabel = new JLabel("搜索");
 
 		associationSearch = new JTextField();
 		associationSearch.setColumns(10);
 
-		JLabel activitySearchLabel = new JLabel("   搜索");
+		activitySearchLabel = new JLabel("   搜索");
 
 		activitySearch = new JTextField();
 		activitySearch.setColumns(10);
 
 		associationsListSP = new JScrollPane();
 
-		JScrollPane activitiesListSP = new JScrollPane();
+		activitiesListSP = new JScrollPane();
 
 		infoAreaSP = new JScrollPane();
 
@@ -71,7 +71,7 @@ public class AssociationsView extends JFrame {
 		activitiesSort.setVisible(false);
 
 		infoArea = new JTextArea();
-		infoArea.setForeground(Color.CYAN);
+		infoArea.setForeground(Color.BLACK);
 		infoArea.setFont(new Font("Mshtakan", Font.PLAIN, 20));
 		infoArea.setEditable(false);
 		infoAreaSP.setViewportView(infoArea);
@@ -149,6 +149,30 @@ public class AssociationsView extends JFrame {
 		backgroundPanel.setLayout(gl_background);
 		getContentPane().setLayout(groupLayout);
 
+	}
+
+	public JScrollPane getActivitiesListSP() {
+		return activitiesListSP;
+	}
+
+	public JLabel getAssociationSearchLabel() {
+		return associationSearchLabel;
+	}
+
+	public JLabel getActivitySearchLabel() {
+		return activitySearchLabel;
+	}
+
+	public JScrollPane getAssociationsListSP() {
+		return associationsListSP;
+	}
+
+	public JScrollPane getInfoAreaSP() {
+		return infoAreaSP;
+	}
+
+	public JPanel getIdentityPanel() {
+		return identityPanel;
 	}
 
 	public JButton getIdentity() {

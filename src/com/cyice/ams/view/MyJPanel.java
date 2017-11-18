@@ -35,7 +35,7 @@ public class MyJPanel extends JPanel {
 		}
 	}
 
-	public void setIBackgroundImage(Image backgroundImage) {
+	public void setBackgroundImage(Image backgroundImage) {
 		this.backgroundImage = backgroundImage;
 	}
 
