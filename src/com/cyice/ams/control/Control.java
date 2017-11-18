@@ -315,9 +315,10 @@ public class Control implements ListSelectionListener, MouseListener {
 		int tag = random.nextInt(imagesCount) + 1;
 		String imageNameWithTag = imageName + "tag";
 		Color color;
+		
+		String url = "file/images/" + imageName + tag + ".jpg";
+		associationsView.getBackgroundPanel().setBackgroundImage(new ImageIcon(url).getImage());
 		if (imageColors.get(imageNameWithTag) == null) {
-			String url = "file/images/" + imageName + tag + ".jpg";
-			associationsView.getBackgroundPanel().setBackgroundImage(new ImageIcon(url).getImage());
 			color = ColorAnalysis.getImagePixel(url);
 			imageColors.put(imageNameWithTag, color);
 		} else {
