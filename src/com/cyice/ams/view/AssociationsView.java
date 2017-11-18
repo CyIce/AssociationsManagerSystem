@@ -17,17 +17,27 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class AssociationsView extends JFrame {
+
+	// 社团搜索输入框
 	private JTextField associationSearch;
+	// 活动搜索输入框
 	private JTextField activitySearch;
+
 	private JScrollPane associationsListSP;
+	// 社团列表
 	private JList<String> associations;
+	// 信息显示区域
 	private JTextArea infoArea;
 	private JScrollPane infoAreaSP;
+	// 活动列表
 	private JList<String> activities;
+	// 排序框
 	private JCheckBox associationsSort;
 	private JCheckBox activitiesSort;
+	// 身份标签
 	private JPanel identityPanel;
 	private JButton identity;
+	// 背景Panle
 	private MyJPanel backgroundPanel;
 	private JLabel associationSearchLabel;
 	private JLabel activitySearchLabel;

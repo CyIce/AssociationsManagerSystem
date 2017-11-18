@@ -18,7 +18,6 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.jar.JarFile;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -399,14 +398,15 @@ public class Control implements ListSelectionListener, MouseListener {
 		// 列表排序及打乱
 		if (e.getSource().equals(associationsView.getAssociationsSort())) {
 
-			if (associationsView.getAssociationsSort().isSelected()) {
+			if (!associationsView.getAssociationsSort().isSelected()) {
+				System.out.println("aa");
 				Collections.sort(associations);
 			} else {
 				Collections.shuffle(associations);
 			}
 			updateAssociationsList(associationsView.getAssociationSearch().getText());
 		} else if (e.getSource().equals(associationsView.getActivitiesSort())) {
-			if (associationsView.getActivitiesSort().isSelected()) {
+			if (!associationsView.getActivitiesSort().isSelected()) {
 				Collections.sort(activities);
 			} else {
 				Collections.shuffle(activities);
