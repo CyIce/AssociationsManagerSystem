@@ -17,6 +17,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JRadioButton;
+import javax.swing.JTable;
 
 public class AssociationsView extends JFrame {
 	private JTextField associationSearch;

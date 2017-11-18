@@ -137,12 +137,13 @@ public class Control implements ListSelectionListener, MouseListener, ActionList
 		}
 	}
 
-	// 更新社团列表内容
+	// 更新社团列表内容，实现搜索功能
 	private void updateAssociationsList(String _words) {
 		DefaultListModel<String> associationsValue = new DefaultListModel<>();
 		Boolean isBlank = true;
 		for (Association association : associations) {
-			if (_words == null || association.getName().contains(_words)) {
+			if (_words == null || association.getName().contains(_words)
+					|| association.getActivities().contains(_words)) {
 				associationsValue.addElement(association.getName());
 				isBlank = false;
 			}
@@ -152,12 +153,12 @@ public class Control implements ListSelectionListener, MouseListener, ActionList
 		}
 	}
 
-	// 更新活动列表内容
+	// 更新活动列表内容，实现搜索功能
 	private void updateActivitiesList(String _words) {
 		DefaultListModel<String> activitiesValue = new DefaultListModel<>();
 		Boolean isBlank = true;
 		for (Activity activity : activities) {
-			if (_words == null || activity.getName().contains(_words)) {
+			if (_words == null || activity.getName().contains(_words) || activity.getAssociations().contains(_words)) {
 				activitiesValue.addElement(activity.getName());
 				isBlank = false;
 			}
