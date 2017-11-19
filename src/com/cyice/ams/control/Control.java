@@ -57,6 +57,8 @@ public class Control implements ListSelectionListener, MouseListener {
 	private Queue<String> associationImagesUrl = new LinkedList<>();
 	// 一个社团用于展示的图片数量
 	private int imagesCount = 2;
+	//无操作最长时间
+	private int AFBTime=10000;
 	// 展示照片切换时间间隔
 	private int imageSwitshTime = 10000;
 	// 储存用于展示的照片的主颜色
@@ -146,7 +148,7 @@ public class Control implements ListSelectionListener, MouseListener {
 		Date nowDate = new Date();
 		long disTime = nowDate.getTime() - date.getTime();
 		// 判断是否满足切换界面的条件
-		if (!isShowStatus && disTime > 5000 && !isEnterPassWords && !isController) {
+		if (!isShowStatus && disTime > AFBTime && !isEnterPassWords && !isController) {
 			changeAllComponentsVisible(false);
 			isShowStatus = true;
 			maxFrame();
